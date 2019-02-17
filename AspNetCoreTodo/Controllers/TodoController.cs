@@ -23,11 +23,14 @@ namespace AspNetCoreTodo.Controllers
         #endregion
 
         #region Methods
-        public IActionResult Index()
-        {
-            var items  = _toDoItemService.GetIncompleteItemsAsync();
-            
-            return View();
+        public async Task<IActionResult> Index()
+        {            
+            var viewModel = new TodoViewModel
+            {
+                items = await _toDoItemService.GetIncompleteItemsAsync()
+            };            
+
+            return View(viewModel);
         }
         #endregion
 
