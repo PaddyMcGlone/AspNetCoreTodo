@@ -45,8 +45,10 @@ namespace AspNetCoreTodo
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            // Wiring up the new service.
-            services.AddSingleton<ITodoItemService, FakeToDoItemService>();
+            // The original fake repo.
+            //services.AddSingleton<ITodoItemService, FakeToDoItemService>();
+
+            services.AddScoped<ITodoItemService, ToDoItemService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
