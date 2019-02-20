@@ -25,9 +25,11 @@ namespace AspNetCoreTodo.Services
         #region Methods
         public async Task<TodoItem[]> GetIncompleteItemsAsync()
         {
-            return await _context.ToDoItems
+            var items = await _context.ToDoItems
                             .Where(i => i.isDone == false)
                             .ToArrayAsync();
+
+            return items;
         }
         #endregion
     }
