@@ -19,7 +19,7 @@ namespace AspNetCoreTodo.Services
         public ToDoItemService(ApplicationDbContext context)
         {
             _context = context;
-        }
+        }        
         #endregion
 
         #region Methods
@@ -30,6 +30,17 @@ namespace AspNetCoreTodo.Services
                             .ToArrayAsync();
 
             return items;
+        }
+
+        public async Task<bool> AddTodoItemsAsync(TodoItem todoItem)
+        {
+            todoItem.id     = Guid.NewGuid();
+            todoItem.isDone = false;
+            todoItem.DueAt  = DateTimeOffset.Now.AddDays(3);
+
+            _context.ToDoItems.Add(todoItem);
+            var success = await _context.SaveChangesAsync();
+            return success == 1;
         }
         #endregion
     }
