@@ -38,7 +38,7 @@ namespace AspNetCoreTodo.Controllers
         {
             if(!ModelState.IsValid) return View("Index");
 
-            var successful = await _toDoItemService.AddItemAsync(item);
+            var successful = await _toDoItemService.AddTodoItemsAsync(item);
 
             if(!successful)
                 return BadRequest("Could not return item");
