@@ -10,7 +10,6 @@ namespace AspNetCoreTodo.Services
 {
     public class ToDoItemService : ITodoItemService
     {
-
         #region Fields
         private readonly ApplicationDbContext _context;
         #endregion
@@ -35,8 +34,7 @@ namespace AspNetCoreTodo.Services
         public async Task<bool> AddTodoItemsAsync(TodoItem todoItem)
         {
             todoItem.id     = Guid.NewGuid();
-            todoItem.isDone = false;
-            todoItem.DueAt  = DateTimeOffset.Now.AddDays(3);
+            todoItem.isDone = false;            
 
             _context.ToDoItems.Add(todoItem);
             var success = await _context.SaveChangesAsync();
