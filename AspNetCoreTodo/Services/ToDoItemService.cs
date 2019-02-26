@@ -40,6 +40,20 @@ namespace AspNetCoreTodo.Services
             var success = await _context.SaveChangesAsync();
             return success == 1;
         }
+
+        public async Task<bool> MarkTodoItemDoneAsync(Guid id)
+        {
+            if(id == Guid.Empty) return false;
+
+            var item = await _context.ToDoItems
+                                     .SingleOrDefaultAsync(i => i.id == id);
+            
+            item.isDone = true;
+            var success = await _context.SaveChangesAsync();
+            
+            return success == 1;
+        }
+
         #endregion
     }
 }

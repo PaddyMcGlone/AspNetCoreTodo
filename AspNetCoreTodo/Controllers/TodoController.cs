@@ -52,7 +52,7 @@ namespace AspNetCoreTodo.Controllers
             if(id == Guid.Empty) 
                 return BadRequest("Could not update item");
 
-            var successful = await _toDoItemService.MarkAsDoneAsync(item);
+            var successful = await _toDoItemService.MarkTodoItemDoneAsync(id);
 
             return RedirectToAction("Index");
         }
