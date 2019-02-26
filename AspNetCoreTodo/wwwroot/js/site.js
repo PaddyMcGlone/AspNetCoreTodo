@@ -2,3 +2,21 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+// Add an on click event
+$(document).ready(function(){
+    $('.done-checkbox').on('click', function(e){
+        MarkAsCompleted(e.target);
+    });
+});
+
+// Add the submit method
+function MarkAsCompleted(checkbox){
+    checkbox.disabled = true;
+
+    var row = checkbox.closest('tr');
+    $(row).addClass('done');
+
+    var form = checkbox.closest('form');
+    form.submit();
+}
