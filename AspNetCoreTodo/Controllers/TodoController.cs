@@ -35,7 +35,7 @@ namespace AspNetCoreTodo.Controllers
 
             var viewModel = new TodoViewModel
             {
-                items = await _toDoItemService.GetIncompleteItemsAsync()
+                items = await _toDoItemService.GetIncompleteItemsAsync(currentUser)
             };            
 
             return View(viewModel);

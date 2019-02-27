@@ -22,7 +22,7 @@ namespace AspNetCoreTodo.Services
         #endregion
 
         #region Methods
-        public async Task<TodoItem[]> GetIncompleteItemsAsync()
+        public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
         {
             var items = await _context.ToDoItems
                             .Where(i => i.isDone == false)
@@ -51,7 +51,7 @@ namespace AspNetCoreTodo.Services
             if(item == null) return false;
 
             item.isDone = true;
-            
+
             var success = await _context.SaveChangesAsync();            
             return success == 1;
         }
