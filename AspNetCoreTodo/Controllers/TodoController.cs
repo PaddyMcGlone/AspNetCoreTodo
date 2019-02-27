@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreTodo.Models;
 using AspNetCoreTodo.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreTodo.Controllers
 {
+    [Authorize]
     public class TodoController : Controller
     {
         #region Fields
