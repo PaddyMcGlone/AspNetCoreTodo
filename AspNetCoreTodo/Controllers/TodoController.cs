@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreTodo.Models;
 using AspNetCoreTodo.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace AspNetCoreTodo.Controllers
 {
@@ -14,19 +15,24 @@ namespace AspNetCoreTodo.Controllers
     public class TodoController : Controller
     {
         #region Fields
-        ITodoItemService _toDoItemService;
+        private readonly ITodoItemService _toDoItemService;
+        private readonly UserManager<ApplicationUser> _userManager;
         #endregion
 
         #region Constructor
-        public TodoController(ITodoItemService toDoItemService)
+        public TodoController(ITodoItemService toDoItemService, UserManager<ApplicationUser> userManager)
         {
             _toDoItemService = toDoItemService;   
+            _userManager = userManager;
         }
         #endregion
 
         #region Methods
         public async Task<IActionResult> Index()
         {            
+            var currentUser = await _userManager.GetUserAsync(User);
+            if(currentUser == null) return Challenge();
+
             var viewModel = new TodoViewModel
             {
                 items = await _toDoItemService.GetIncompleteItemsAsync()
