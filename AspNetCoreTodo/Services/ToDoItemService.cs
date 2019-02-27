@@ -45,12 +45,14 @@ namespace AspNetCoreTodo.Services
         {
             if(id == Guid.Empty) return false;
 
-            var item = await _context.ToDoItems
+            var item = await _context.ToDoItems                                     
                                      .SingleOrDefaultAsync(i => i.id == id);
             
+            if(item == null) return false;
+
             item.isDone = true;
-            var success = await _context.SaveChangesAsync();
             
+            var success = await _context.SaveChangesAsync();            
             return success == 1;
         }
 

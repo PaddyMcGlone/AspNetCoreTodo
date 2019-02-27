@@ -47,7 +47,7 @@ namespace AspNetCoreTodo.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> MarkAsDone(Guid id)
+        public async Task<IActionResult> MarkDone(Guid id)
         {
             if(id == Guid.Empty) 
                 return BadRequest("Could not update item");
