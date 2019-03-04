@@ -25,7 +25,7 @@ namespace AspNetCoreTodo.Services
         public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
         {
             var items = await _context.ToDoItems
-                            .Where(i => i.isDone == false)
+                            .Where(i => i.isDone == false && i.UserId == user.Id)
                             .ToArrayAsync();
 
             return items;

@@ -46,7 +46,10 @@ namespace AspNetCoreTodo.Controllers
         {
             if(!ModelState.IsValid) return View("Index");
 
-            var successful = await _toDoItemService.AddTodoItemsAsync(item);
+            var currentUser = await _userManager.GetUserAsync(User);
+            if(currentUser == null) return Challenge();
+
+            var successful = await _toDoItemService.AddTodoItemsAsync(item, currentUser);
 
             if(!successful)
                 return BadRequest("Could not return item");
@@ -60,7 +63,10 @@ namespace AspNetCoreTodo.Controllers
             if(id == Guid.Empty) 
                 return BadRequest("Could not update item");
 
-            var successful = await _toDoItemService.MarkTodoItemDoneAsync(id);
+            var currentUser = await _userManager.GetUserAsync(User);
+            if(currentUser == null) return Challenge();
+
+            var successful = await _toDoItemService.MarkTodoItemDoneAsync(id, currentUser);
 
             return RedirectToAction("Index");
         }
