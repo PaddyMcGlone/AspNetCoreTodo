@@ -31,22 +31,23 @@ namespace AspNetCoreTodo.Services
             return items;
         }
 
-        public async Task<bool> AddTodoItemsAsync(TodoItem todoItem)
+        public async Task<bool> AddTodoItemsAsync(TodoItem todoItem, ApplicationUser user)
         {
             todoItem.id     = Guid.NewGuid();
-            todoItem.isDone = false;            
+            todoItem.isDone = false;
+            todoItem.UserId = user.Id;            
 
             _context.ToDoItems.Add(todoItem);
             var success = await _context.SaveChangesAsync();
             return success == 1;
         }
 
-        public async Task<bool> MarkTodoItemDoneAsync(Guid id)
+        public async Task<bool> MarkTodoItemDoneAsync(Guid id, ApplicationUser user)
         {
             if(id == Guid.Empty) return false;
 
             var item = await _context.ToDoItems                                     
-                                     .SingleOrDefaultAsync(i => i.id == id);
+                                     .SingleOrDefaultAsync(i => i.id == id && i.UserId == user.Id);
             
             if(item == null) return false;
 
