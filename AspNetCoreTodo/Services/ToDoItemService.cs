@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreTodo.Data;
 using AspNetCoreTodo.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreTodo.Services
@@ -22,7 +23,7 @@ namespace AspNetCoreTodo.Services
         #endregion
 
         #region Methods
-        public async Task<TodoItem[]> GetIncompleteItemsAsync(ApplicationUser user)
+        public async Task<TodoItem[]> GetIncompleteItemsAsync(IdentityUser user)
         {
             var items = await _context.ToDoItems
                             .Where(i => i.isDone == false && i.UserId == user.Id)
@@ -31,7 +32,7 @@ namespace AspNetCoreTodo.Services
             return items;
         }
 
-        public async Task<bool> AddTodoItemsAsync(TodoItem todoItem, ApplicationUser user)
+        public async Task<bool> AddTodoItemsAsync(TodoItem todoItem, IdentityUser user)
         {
             todoItem.id     = Guid.NewGuid();
             todoItem.isDone = false;
@@ -42,7 +43,7 @@ namespace AspNetCoreTodo.Services
             return success == 1;
         }
 
-        public async Task<bool> MarkTodoItemDoneAsync(Guid id, ApplicationUser user)
+        public async Task<bool> MarkTodoItemDoneAsync(Guid id, IdentityUser user)
         {
             if(id == Guid.Empty) return false;
 

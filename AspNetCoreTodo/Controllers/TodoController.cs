@@ -16,11 +16,11 @@ namespace AspNetCoreTodo.Controllers
     {
         #region Fields
         private readonly ITodoItemService _toDoItemService;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
         #endregion
 
         #region Constructor
-        public TodoController(ITodoItemService toDoItemService, UserManager<ApplicationUser> userManager)
+        public TodoController(ITodoItemService toDoItemService, UserManager<IdentityUser> userManager)
         {
             _toDoItemService = toDoItemService;   
             _userManager = userManager;
