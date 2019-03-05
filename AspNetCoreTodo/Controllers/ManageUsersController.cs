@@ -8,6 +8,7 @@ using AspNetCoreTodo.Models;
 using AspNetCoreTodo.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreTodo.Controllers
 {    
@@ -15,7 +16,7 @@ namespace AspNetCoreTodo.Controllers
     public class ManageUsersController : Controller
     {
         #region Fields        
-        
+
         private readonly UserManager<IdentityUser> _userManager;
 
         #endregion
@@ -30,6 +31,20 @@ namespace AspNetCoreTodo.Controllers
         #endregion
 
         #region Methods
+
+        public async Task<IActionResult> Index()
+        {
+            var admins = (await _userManager.GetUsersInRoleAsync("Administrators")).ToArray();
+            var everyone = await _userManager.Users.ToArrayAsync();
+
+            var model = new ManageUserViewModel
+            {
+                Admins = admins,
+                Everyone = everyone
+            };
+
+            return View(model);
+        }
         
         #endregion
 
