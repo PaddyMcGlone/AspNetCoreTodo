@@ -31,7 +31,7 @@ namespace AspNetCoreTodo
             var testAdmin = await UserManager.Users                
                 .SingleOrDefaultAsync(u => u.Email == "admin@todo.local");
 
-            if(testAdmin == null) return;
+            if(testAdmin != null) return;
 
             testAdmin = new IdentityUser 
             {
